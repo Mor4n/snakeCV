@@ -110,6 +110,7 @@ class MAIN:
         self.check_collision()
         self.check_fail()
     def draw_elements(self):
+        self.draw_grass()
         self.fruit.draw_fruit()
         self.snake.draw_snake()
 
@@ -132,10 +133,23 @@ class MAIN:
         pygame.quit()
         sys.exit()
 
+    def draw_grass(self):
+        grass_color = (167,209,61)
 
+        for row in range(cell_number):
+            if row % 2 ==0:
+                for col in range(cell_number):
+                    if col %2==0:
+                        grass_rect = pygame.Rect(col* cell_size,row*cell_size,cell_size,cell_size)
+                        pygame.draw.rect(screen,grass_color,grass_rect)
+            else:
+                for col in range(cell_number):
+                    if col % 2 !=0:
+                        grass_rect = pygame.Rect(col * cell_size,row*cell_size,cell_size,cell_size)
+                        pygame.draw.rect(screen,grass_color,grass_rect)
 pygame.init()
-#Poner las celdas
-cell_size =40
+#Poner las celdas 40-20
+cell_size =30
 cell_number = 20
 #Tamaño de pantalla
 screen = pygame.display.set_mode((cell_size*cell_number,cell_size*cell_number))
