@@ -24,6 +24,12 @@ while True:
     elif face_center_x > 440:
         pyautogui.press('right')
         print("Moviendo hacia la derecha")
+    elif face_center_y > 440:
+        pyautogui.press('right')
+        print("Moviendo hacia la derecha")
+    elif face_center_y > 440:
+        pyautogui.press('right')
+        print("Moviendo hacia la derecha")
 
     cv2.imshow('Face Detection', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):

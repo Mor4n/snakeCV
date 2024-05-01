@@ -1,6 +1,10 @@
 import sys, pygame,random
 from pygame.math import Vector2
+import cv2
+import pyautogui
 
+cap = cv2.VideoCapture(0)
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default (2).xml')
 class SNAKE:
     def __init__(self):
         self.body = [Vector2(5,10),Vector2(6,10),Vector2(7,10)]
@@ -179,27 +183,38 @@ main_game = MAIN()
 
 #Se seguirá ejecutando mientras
 while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type ==SCREEN_UPDATE:
-            main_game.update()
-            #Aqui es el evento cuando toquemos los botones
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                if main_game.snake.direction.y !=1:
-                    main_game.snake.direction = Vector2(0,-1)
-            if event.key == pygame.K_RIGHT:
-                if main_game.snake.direction.x != -1:
-                    main_game.snake.direction = Vector2(1,0)
-            if event.key == pygame.K_DOWN:
-                if main_game.snake.direction.y != -1:
-                    main_game.snake.direction = Vector2(0,1)
-            if event.key == pygame.K_LEFT:
-                if main_game.snake.direction.x != 1:
-                    main_game.snake.direction = Vector2(-1,0)
-    #fondo
+    ret, frame = cap.read()
+
+    # Convertir el fotograma a escala de grises
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    faces = face_cascade.detectMultiScale(gray, 1.3, 5, minSize=(30, 30), maxSize=(400, 400))
+
+    for (x, y, w, h) in faces:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+
+    face_center_x = x + w // 2
+    face_center_y = y + h // 2
+
+
+    #Aqui es el evento cuando toquemos los botones
+
+
+    if face_center_y > 440:
+        if main_game.snake.direction.y !=1:
+            main_game.snake.direction = Vector2(0,-1)
+        elif face_center_x > 440:
+            if main_game.snake.direction.x != -1:
+                main_game.snake.direction = Vector2(1,0)
+        elif face_center_y < 200:
+            if main_game.snake.direction.y != -1:
+                main_game.snake.direction = Vector2(0,1)
+        elif face_center_x < 200:
+            if main_game.snake.direction.x != 1:
+                main_game.snake.direction = Vector2(-1,0)
+        else:
+            print('error')
+
     screen.fill((175, 215, 70))
 
     #test_rect.right += 1
