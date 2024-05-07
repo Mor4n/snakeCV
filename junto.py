@@ -196,7 +196,7 @@ game_font = pygame.font.Font('.idea/fonts/PoetsenOne-Regular.ttf',25)
 
 
 SCREEN_UPDATE = pygame.USEREVENT
-pygame.time.set_timer(SCREEN_UPDATE,150)
+pygame.time.set_timer(SCREEN_UPDATE,350)
 
 main_game = MAIN()
 
@@ -237,12 +237,17 @@ while True:
 
                 #TODO AQUI ESTÁN LOS DE MOVER :D SOLO SE CAMBIA ESTO PARA AÑADIR EL DE ARRIBA Y ABAJO
                 if face_center_x < 200:
-                    pyautogui.press('left')
-                    print("Moving left")
-                elif face_center_x > 440:
                     pyautogui.press('right')
+                    print("Moving left")
+                elif face_center_x > 400:
+                    pyautogui.press('left')
                     print("Moving right")
-
+                elif face_center_y > 300:
+                    pyautogui.press('down')
+                    print("Moving up")
+                elif face_center_y < 200:
+                    pyautogui.press('up')
+                    print("Moving down")
 
 
         cv2.imshow('Face Detection', frame)
