@@ -182,7 +182,7 @@ class MAIN:
                         pygame.draw.rect(screen,grass_color,grass_rect)
 pygame.init()
 #Poner las celdas 40-20
-cell_size =30
+cell_size =35
 cell_number = 20
 #Tamaño de pantalla
 screen = pygame.display.set_mode((cell_size*cell_number,cell_size*cell_number))
